@@ -1,0 +1,16 @@
+{
+    "ANNOUNCEMENTS": {
+        "MODULE_DETAILS": {
+            "SINGULAR_NAME": "公告",
+            "PLURAL_NAME": "公告"
+        },
+        "FIELDS": {
+            "NOTIFYONEMAIL": "透過電子郵件通知回應者",
+            "WARROOMS": "戰情室",
+            "ANNOUNCEMENTCRITICALITY": "重要性",
+            "TITLE": "標題",
+            "DESCRIPTION": "描述",
+            "ANNOUNCEMENTTYPE": "公告類型"
+        }
+    }
+}

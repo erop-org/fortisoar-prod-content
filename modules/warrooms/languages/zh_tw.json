@@ -1,0 +1,33 @@
+{
+    "WARROOMS": {
+        "MODULE_DETAILS": {
+            "SINGULAR_NAME": "戰情室",
+            "PLURAL_NAME": "戰情室"
+        },
+        "FIELDS": {
+            "ANNOUNCEMENTS": "公告",
+            "CURRENTSTATUS": "當前狀態",
+            "TITLE": "標題",
+            "SUBTITLE": "副標題",
+            "SUMMARY": "摘要",
+            "NEXTSTEPS": "後續步驟",
+            "ACTIVESINCE": "啟動時間",
+            "CLOSEDON": "關閉時間",
+            "STATUS": "狀態",
+            "CONFERENCEBRIDGE": "會議橋接",
+            "CONFERENCEBRIDGEINTEGRATION": "會議橋接整合",
+            "COLLABORATION": "協作",
+            "COLLABORATIONINTEGRATION": "協作整合",
+            "REPORT": "報告",
+            "TASKS": "任務",
+            "COMMENTS": "評論",
+            "INCIDENTS": "事件",
+            "ALERTS": "警報",
+            "ATTACHMENTS": "附件",
+            "ASSETS": "資產",
+            "INDICATORS": "指標",
+            "LAUNCHEDBY": "啟動者",
+            "COMMUNICATION": "通訊"
+        }
+    }
+}

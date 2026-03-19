@@ -1,0 +1,357 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "buwi_test_260316",
+    "aliasName": null,
+    "tag": null,
+    "description": null,
+    "isActive": true,
+    "debug": true,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/4dc865c8-012e-4326-8be5-252b723ea734",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/9d1b8ced-8cbc-430e-941a-171baa29a158",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Configuratoin",
+            "description": null,
+            "arguments": {
+                "thread_ts": "1773652901.757969",
+                "channel_id": "C0AM21Z608J",
+                "slack_user_id": "U0ALNKKB6G5"
+            },
+            "status": null,
+            "top": "280",
+            "left": "720",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "eced9f59-d5d7-4843-9879-f87502f66d34"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create Channel",
+            "description": null,
+            "arguments": {
+                "name": "Slack",
+                "config": "f150bcb9-a300-47ad-8a6f-cb795755e72f",
+                "params": {
+                    "name": "soar_test1",
+                    "is_private": false
+                },
+                "version": "3.2.0",
+                "connector": "slack",
+                "operation": "create_channel",
+                "operationTitle": "Create Channel",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "420",
+            "left": "1080",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "8627747b-877c-4fbc-8851-f105233d52b7"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create File",
+            "description": null,
+            "arguments": {
+                "name": "Slack",
+                "config": "f150bcb9-a300-47ad-8a6f-cb795755e72f",
+                "params": {
+                    "path": "File IRI",
+                    "title": "{{vars.steps.Find_Attachment[0].file.filename}}",
+                    "value": "{{vars.steps.Find_Attachment[1].file['@id']}}",
+                    "channel": "{{vars.channel_id}}",
+                    "comment": "",
+                    "threadTS": "{{vars.steps.Send_Message.data.ts}}",
+                    "file_name": "{{vars.steps.Find_Attachment[0].file.filename}}",
+                    "file_type": ""
+                },
+                "version": "3.2.0",
+                "connector": "slack",
+                "operation": "upload_file",
+                "operationTitle": "Upload File",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "760",
+            "left": "680",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "aad09965-6410-4a0d-8e9f-11cf84e4599e"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create JSON Fil",
+            "description": null,
+            "arguments": {
+                "params": {
+                    "contents": "{\"abc\":\"abcd\"}",
+                    "filename": "{{arrow.get().int_timestamp}}_test_file.json",
+                    "mimetype": "text\/plain"
+                },
+                "version": "3.7.0",
+                "connector": "cyops_utilities",
+                "operation": "create_file_from_string",
+                "operationTitle": "File: Create File from String",
+                "step_variables": []
+            },
+            "status": null,
+            "top": "360",
+            "left": "340",
+            "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+            "group": null,
+            "uuid": "6da0a103-c485-4865-9517-83dc1d344981"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Create JSON File",
+            "description": null,
+            "arguments": {
+                "name": "Utilities",
+                "params": {
+                    "contents": "asfsdagf",
+                    "filename": "{{arrow.get().int_timestamp}}test_file.json",
+                    "mimetype": "text\/plain"
+                },
+                "version": "3.7.0",
+                "connector": "cyops_utilities",
+                "operation": "create_file_from_string",
+                "operationTitle": "File: Create File from String",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "10",
+            "left": "10",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "4c9ee826-8a84-4fae-a307-bb51d5fa9e0d"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Find Attachment",
+            "description": null,
+            "arguments": {
+                "query": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                },
+                "module": "attachments?$limit=30",
+                "step_variables": []
+            },
+            "status": null,
+            "top": "431",
+            "left": "679",
+            "stepType": "\/api\/3\/workflow_step_types\/b593663d-7d13-40ce-a3a3-96dece928770",
+            "group": null,
+            "uuid": "b925a529-1ce8-4173-a441-9397a6aef36e"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Invite User",
+            "description": null,
+            "arguments": {
+                "name": "Slack",
+                "config": "f150bcb9-a300-47ad-8a6f-cb795755e72f",
+                "params": {
+                    "users": "{{vars.slack_user_id}}",
+                    "channel": "{{vars.steps.Create_Channel.data.channel.id}}"
+                },
+                "version": "3.2.0",
+                "connector": "slack",
+                "operation": "invite_user_to_channel",
+                "operationTitle": "Invite Users To Channel",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "565",
+            "left": "1221",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "eb71225c-d674-48af-a013-dce3ebe869be"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Send Message",
+            "description": null,
+            "arguments": {
+                "name": "Slack",
+                "config": "f150bcb9-a300-47ad-8a6f-cb795755e72f",
+                "params": {
+                    "blocks": [],
+                    "channel": "{{vars.channel_id}}",
+                    "message": "test1",
+                    "email_id": "",
+                    "thread_ts": "",
+                    "attachments": []
+                },
+                "version": "3.2.0",
+                "connector": "slack",
+                "operation": "send_message",
+                "operationTitle": "Send Message",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "580",
+            "left": "620",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "3d2536e9-0b99-41cc-9820-bd1f5a104868"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "120",
+            "left": "680",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "9d1b8ced-8cbc-430e-941a-171baa29a158"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "TEST",
+            "description": null,
+            "arguments": {
+                "name": "Slack",
+                "config": "f150bcb9-a300-47ad-8a6f-cb795755e72f",
+                "params": {
+                    "users": "U0ALNKKB6G5",
+                    "channel": "{{vars.channel_id}}"
+                },
+                "version": "3.2.0",
+                "connector": "slack",
+                "operation": "invite_user_to_channel",
+                "operationTitle": "Invite Users To Channel",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "300",
+            "left": "1120",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "fa7533b0-6988-4a9c-8b09-5132e0750884"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Upload to Attachments",
+            "description": null,
+            "arguments": {
+                "params": {
+                    "name": "{{vars.steps.Create_JSON_Fil.data.filename}}",
+                    "filename": "{{vars.steps.Create_JSON_Fil.data.filename}}",
+                    "description": "",
+                    "request_headers": "",
+                    "multipart_headers": "",
+                    "extra_multipart_fields": ""
+                },
+                "version": "3.7.0",
+                "connector": "cyops_utilities",
+                "operation": "create_cyops_attachment",
+                "operationTitle": "File: Create Attachment from File",
+                "step_variables": []
+            },
+            "status": null,
+            "top": "564",
+            "left": "350",
+            "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+            "group": null,
+            "uuid": "a72c62ce-9de1-434b-9d42-d59576422963"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Configuratoin -> Find Attachment",
+            "targetStep": "\/api\/3\/workflow_steps\/b925a529-1ce8-4173-a441-9397a6aef36e",
+            "sourceStep": "\/api\/3\/workflow_steps\/eced9f59-d5d7-4843-9879-f87502f66d34",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "ada7575c-de06-4f24-9a2b-2aced2c24820"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Create Channel -> Invite User",
+            "targetStep": "\/api\/3\/workflow_steps\/eb71225c-d674-48af-a013-dce3ebe869be",
+            "sourceStep": "\/api\/3\/workflow_steps\/8627747b-877c-4fbc-8851-f105233d52b7",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "f2e3a0bf-c229-410c-9b91-84b6c669ef95"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Create JSON Fil -> Upload to Attachments",
+            "targetStep": "\/api\/3\/workflow_steps\/a72c62ce-9de1-434b-9d42-d59576422963",
+            "sourceStep": "\/api\/3\/workflow_steps\/6da0a103-c485-4865-9517-83dc1d344981",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "90e2c7cf-73fa-4311-bc78-76c2eb243ab7"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Find Attachment -> Send Message",
+            "targetStep": "\/api\/3\/workflow_steps\/3d2536e9-0b99-41cc-9820-bd1f5a104868",
+            "sourceStep": "\/api\/3\/workflow_steps\/b925a529-1ce8-4173-a441-9397a6aef36e",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "c9616996-5841-43e4-a277-56047348d1ec"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Send Message -> Create File",
+            "targetStep": "\/api\/3\/workflow_steps\/aad09965-6410-4a0d-8e9f-11cf84e4599e",
+            "sourceStep": "\/api\/3\/workflow_steps\/3d2536e9-0b99-41cc-9820-bd1f5a104868",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "d8714441-9464-4b28-a6a8-e3937fdcc42a"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> Configuratoin",
+            "targetStep": "\/api\/3\/workflow_steps\/eced9f59-d5d7-4843-9879-f87502f66d34",
+            "sourceStep": "\/api\/3\/workflow_steps\/9d1b8ced-8cbc-430e-941a-171baa29a158",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "96af7027-41b1-44d2-a9af-acd230766868"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+    "isEditable": true,
+    "uuid": "79f5de3a-5ff8-445a-92c7-4185be0fd5b7",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}

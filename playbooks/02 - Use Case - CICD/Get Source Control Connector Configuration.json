@@ -1,0 +1,308 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "Get Source Control Connector Configuration",
+    "aliasName": null,
+    "tag": null,
+    "description": "If source control connector is configured for the logged in user then return connector configuration id else raise exception",
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/4c58fed3-9e16-451a-9528-0be2b71acda4",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/6af4157c-8441-423e-8907-09e72fcf7941",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Get Current User Configuration",
+            "description": null,
+            "arguments": {
+                "current_user_source_control_connector_username": "{% set ns = namespace(match_found=false, matched_username=None) %}{% for connector_config in vars.steps.Get_Source_Control_Connector_Configurations.data.configuration %}{% if vars.logged_in_user_sc_name.strip() == connector_config.config.username.strip() %}{% set ns.match_found = true %}{% set ns.matched_username = connector_config.config.username %}{% break %}{% endif %}{% endfor %}{% if ns.match_found %}{{ ns.matched_username }}{% else %}null{% endif %}",
+                "current_user_source_control_connector_config_id": "{% set ns = namespace(match_found=false) %}{% for connector_config in vars.steps.Get_Source_Control_Connector_Configurations.data.configuration %}{% if vars.logged_in_user_sc_name == connector_config.config.username %}{{ connector_config.config_id }}{% set ns.match_found = true %}{% break %}{% endif %}{% endfor %}{% if not ns.match_found %}null{% endif %}"
+            },
+            "status": null,
+            "top": "570",
+            "left": "485",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "2c4669a5-feca-4025-98f9-190c4ac2020c"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Get Source Control Connector Configurations",
+            "description": null,
+            "arguments": {
+                "params": {
+                    "iri": "\/api\/integration\/connectors\/{{vars.cicd_env[\"source_control\"][\"name\"]}}\/{{vars.cicd_env[\"source_control\"][\"version\"]}}\/?format=json",
+                    "body": "",
+                    "method": "POST"
+                },
+                "version": "3.7.0",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+            },
+            "status": null,
+            "top": "165",
+            "left": "310",
+            "stepType": "\/api\/3\/workflow_step_types\/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+            "group": null,
+            "uuid": "d9154b92-9539-49a7-b722-cc6e7ae58174"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Is Connector Configured",
+            "description": null,
+            "arguments": {
+                "conditions": [
+                    {
+                        "option": "Yes",
+                        "step_iri": "\/api\/3\/workflow_steps\/38dd5b2a-6b7e-4cf9-b4f4-3ec961cf5b80",
+                        "condition": "{{ vars.current_user_source_control_connector_config_id != None }}",
+                        "step_name": "Return Output"
+                    },
+                    {
+                        "option": "No",
+                        "default": true,
+                        "step_iri": "\/api\/3\/workflow_steps\/83af27eb-b9e4-4338-98f9-a51f700bb19f",
+                        "step_name": "Return No Output"
+                    }
+                ],
+                "step_variables": []
+            },
+            "status": null,
+            "top": "705",
+            "left": "485",
+            "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+            "group": null,
+            "uuid": "7b427db2-016f-4c58-af52-b2d259b79426"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Is Logged in User Mapped",
+            "description": null,
+            "arguments": {
+                "conditions": [
+                    {
+                        "option": "Yes",
+                        "step_iri": "\/api\/3\/workflow_steps\/2c4669a5-feca-4025-98f9-190c4ac2020c",
+                        "condition": "{{ vars.logged_in_user_sc_name != None }}",
+                        "step_name": "Get Current User Configuration"
+                    },
+                    {
+                        "option": "No",
+                        "default": true,
+                        "step_iri": "\/api\/3\/workflow_steps\/5803d81b-20a4-493d-864e-eb45d78c3b13",
+                        "step_name": "Update Status"
+                    }
+                ],
+                "step_variables": []
+            },
+            "status": null,
+            "top": "435",
+            "left": "310",
+            "stepType": "\/api\/3\/workflow_step_types\/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+            "group": null,
+            "uuid": "1b057294-590b-4a4d-b951-7b455c52c426"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Loggedin User Details",
+            "description": null,
+            "arguments": {
+                "logged_in_user_sc_name": "{{((vars.currentUser or vars.request['currentUser'] ) | fromIRI).sourceControlUsername}}"
+            },
+            "status": null,
+            "top": "300",
+            "left": "310",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "283d973a-f3b8-4b62-aab6-ef2d7e669b70"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Return No Output",
+            "description": null,
+            "arguments": {
+                "config_id": "None"
+            },
+            "status": null,
+            "top": "840",
+            "left": "135",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "83af27eb-b9e4-4338-98f9-a51f700bb19f"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Return Output",
+            "description": null,
+            "arguments": {
+                "config_id": "{{vars.current_user_source_control_connector_config_id}}",
+                "source_control_username": "{{vars.current_user_source_control_connector_username}}"
+            },
+            "status": null,
+            "top": "840",
+            "left": "495",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "38dd5b2a-6b7e-4cf9-b4f4-3ec961cf5b80"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    },
+                    "cicd_env": "{{globalVars.cicd_env}}"
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "30",
+            "left": "310",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "6af4157c-8441-423e-8907-09e72fcf7941"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Update Status",
+            "description": null,
+            "arguments": {
+                "when": "{{vars.input.records | length > 0}}",
+                "resource": {
+                    "status": "\/api\/3\/picklists\/cc6dc0fe-4a49-44e7-af30-8a0fbeacd293"
+                },
+                "operation": "Append",
+                "collection": "{{vars.input.records[0]['@id']}}",
+                "__recommend": [],
+                "ignore_errors": true,
+                "collectionType": "\/api\/3\/change_management",
+                "fieldOperation": {
+                    "recordTags": "Append"
+                },
+                "step_variables": []
+            },
+            "status": null,
+            "top": "705",
+            "left": "125",
+            "stepType": "\/api\/3\/workflow_step_types\/b593663d-7d13-40ce-a3a3-96dece928722",
+            "group": null,
+            "uuid": "5803d81b-20a4-493d-864e-eb45d78c3b13"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Get Current User Configuration -> Is Connector Configured",
+            "targetStep": "\/api\/3\/workflow_steps\/7b427db2-016f-4c58-af52-b2d259b79426",
+            "sourceStep": "\/api\/3\/workflow_steps\/2c4669a5-feca-4025-98f9-190c4ac2020c",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "91e6637b-55cf-45bc-bb67-5c7930d10b5d"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Get Source Control Connector Configurations -> Loggedin User Details",
+            "targetStep": "\/api\/3\/workflow_steps\/283d973a-f3b8-4b62-aab6-ef2d7e669b70",
+            "sourceStep": "\/api\/3\/workflow_steps\/d9154b92-9539-49a7-b722-cc6e7ae58174",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "114664dd-7768-4d74-a209-f1383d701d53"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Is Connector Configured -> Return No Output",
+            "targetStep": "\/api\/3\/workflow_steps\/83af27eb-b9e4-4338-98f9-a51f700bb19f",
+            "sourceStep": "\/api\/3\/workflow_steps\/7b427db2-016f-4c58-af52-b2d259b79426",
+            "label": "No",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "0721d836-1245-48f2-ac5c-799290453fa8"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Is Connector Configured -> Return Output",
+            "targetStep": "\/api\/3\/workflow_steps\/38dd5b2a-6b7e-4cf9-b4f4-3ec961cf5b80",
+            "sourceStep": "\/api\/3\/workflow_steps\/7b427db2-016f-4c58-af52-b2d259b79426",
+            "label": "Yes",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "b72b4b5d-26d7-4579-a36b-91963aa0a5f2"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Is Connector Configure -> Get Current User Configuration",
+            "targetStep": "\/api\/3\/workflow_steps\/2c4669a5-feca-4025-98f9-190c4ac2020c",
+            "sourceStep": "\/api\/3\/workflow_steps\/1b057294-590b-4a4d-b951-7b455c52c426",
+            "label": "Yes",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "e4b160ec-504b-46ba-b732-2d2d407f8837"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Is Connector Configure -> Update Status",
+            "targetStep": "\/api\/3\/workflow_steps\/5803d81b-20a4-493d-864e-eb45d78c3b13",
+            "sourceStep": "\/api\/3\/workflow_steps\/1b057294-590b-4a4d-b951-7b455c52c426",
+            "label": "No",
+            "isExecuted": false,
+            "group": null,
+            "uuid": "1304177a-0fcc-40aa-94e3-545acd8dbf16"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Loggedin User Details -> Is Connector Configure",
+            "targetStep": "\/api\/3\/workflow_steps\/1b057294-590b-4a4d-b951-7b455c52c426",
+            "sourceStep": "\/api\/3\/workflow_steps\/283d973a-f3b8-4b62-aab6-ef2d7e669b70",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "4d7d6bbc-789f-4332-9e4c-008114115339"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> Get Source Control Connector Configurations",
+            "targetStep": "\/api\/3\/workflow_steps\/d9154b92-9539-49a7-b722-cc6e7ae58174",
+            "sourceStep": "\/api\/3\/workflow_steps\/6af4157c-8441-423e-8907-09e72fcf7941",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "76c6c212-ff58-4d15-8e55-51e08ed4c6b2"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Update Status -> Return No Output",
+            "targetStep": "\/api\/3\/workflow_steps\/83af27eb-b9e4-4338-98f9-a51f700bb19f",
+            "sourceStep": "\/api\/3\/workflow_steps\/5803d81b-20a4-493d-864e-eb45d78c3b13",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "43dc9c66-1304-4b83-afaa-eedd1b0dc2d0"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/b6d710a9-a8ec-41ec-8817-fe9fa062fcdd",
+    "isEditable": false,
+    "uuid": "dd654cd4-923f-4c20-837c-279669c2fa82",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": [
+        "CICD",
+        "Subroutine"
+    ]
+}

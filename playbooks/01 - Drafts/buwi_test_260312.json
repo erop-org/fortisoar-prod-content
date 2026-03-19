@@ -1,0 +1,107 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "buwi_test_260312",
+    "aliasName": null,
+    "tag": null,
+    "description": null,
+    "isActive": true,
+    "debug": true,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/4dc865c8-012e-4326-8be5-252b723ea734",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/2887e349-e0d3-46ac-8297-17486643ef57",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Configuration",
+            "description": null,
+            "arguments": [],
+            "status": null,
+            "top": "240",
+            "left": "380",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "7fc6d879-5870-48a6-8cac-1582d139dff6"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                    "input": {
+                        "params": []
+                    }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+            },
+            "status": null,
+            "top": "60",
+            "left": "240",
+            "stepType": "\/api\/3\/workflow_step_types\/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+            "group": null,
+            "uuid": "2887e349-e0d3-46ac-8297-17486643ef57"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "TEST",
+            "description": null,
+            "arguments": {
+                "name": "Whois RDAP",
+                "config": "a70fe537-4b5f-4a34-8c86-a73e636a8b5c",
+                "params": {
+                    "ip": "1.1.1.1"
+                },
+                "version": "1.0.2",
+                "connector": "whois-rdap",
+                "operation": "whois_ip",
+                "operationTitle": "Whois IP",
+                "pickFromTenant": false,
+                "step_variables": []
+            },
+            "status": null,
+            "top": "404",
+            "left": "518",
+            "stepType": "\/api\/3\/workflow_step_types\/0bfed618-0316-11e7-93ae-92361f002671",
+            "group": null,
+            "uuid": "60db62a2-a3dc-422e-8c9b-cc82a1369f04"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Configuration -> TEST",
+            "targetStep": "\/api\/3\/workflow_steps\/60db62a2-a3dc-422e-8c9b-cc82a1369f04",
+            "sourceStep": "\/api\/3\/workflow_steps\/7fc6d879-5870-48a6-8cac-1582d139dff6",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "8d02406f-3429-49e9-bb54-a7589a85581c"
+        },
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> Configuration",
+            "targetStep": "\/api\/3\/workflow_steps\/7fc6d879-5870-48a6-8cac-1582d139dff6",
+            "sourceStep": "\/api\/3\/workflow_steps\/2887e349-e0d3-46ac-8297-17486643ef57",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "d99ad6f3-fa9f-44b6-b28f-b1b9fe5f1400"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+    "isEditable": true,
+    "uuid": "07341a49-dc88-464e-954e-a492bf7818cc",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}

@@ -1,0 +1,96 @@
+{
+    "@type": "Workflow",
+    "triggerLimit": null,
+    "name": "deploy playbook",
+    "aliasName": null,
+    "tag": null,
+    "description": null,
+    "isActive": true,
+    "debug": false,
+    "singleRecordExecution": false,
+    "remoteExecutableFlag": false,
+    "parameters": [],
+    "synchronous": false,
+    "collection": "\/api\/3\/workflow_collections\/4dc865c8-012e-4326-8be5-252b723ea734",
+    "versions": [],
+    "triggerStep": "\/api\/3\/workflow_steps\/31b36cd6-9768-4ee9-8d2d-fb0100def217",
+    "steps": [
+        {
+            "@type": "WorkflowStep",
+            "name": "Start",
+            "description": null,
+            "arguments": {
+                "route": "0af22811-3fad-4f97-be2c-d4b78858fc5b",
+                "resources": [
+                    "alerts"
+                ],
+                "__triggerLimit": true,
+                "inputVariables": [],
+                "step_variables": {
+                    "input": {
+                        "params": [],
+                        "records": "{{vars.input.records}}"
+                    }
+                },
+                "triggerOnSource": true,
+                "displayConditions": {
+                    "alerts": {
+                        "sort": [],
+                        "limit": 30,
+                        "logic": "AND",
+                        "filters": []
+                    }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": false,
+                "showToasterMessage": {
+                    "visible": false,
+                    "messageVisible": true
+                },
+                "triggerOnReplicate": false,
+                "singleRecordExecution": false
+            },
+            "status": null,
+            "top": "40",
+            "left": "40",
+            "stepType": "\/api\/3\/workflow_step_types\/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+            "group": null,
+            "uuid": "31b36cd6-9768-4ee9-8d2d-fb0100def217"
+        },
+        {
+            "@type": "WorkflowStep",
+            "name": "test",
+            "description": null,
+            "arguments": {
+                "test": "test"
+            },
+            "status": null,
+            "top": "310",
+            "left": "402",
+            "stepType": "\/api\/3\/workflow_step_types\/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+            "group": null,
+            "uuid": "258640ef-9856-404a-babd-5159f494cc84"
+        }
+    ],
+    "routes": [
+        {
+            "@type": "WorkflowRoute",
+            "name": "Start -> test",
+            "targetStep": "\/api\/3\/workflow_steps\/258640ef-9856-404a-babd-5159f494cc84",
+            "sourceStep": "\/api\/3\/workflow_steps\/31b36cd6-9768-4ee9-8d2d-fb0100def217",
+            "label": null,
+            "isExecuted": false,
+            "group": null,
+            "uuid": "4fd97f89-cd2b-4a81-9723-7a6b0ee874d2"
+        }
+    ],
+    "groups": [],
+    "priority": "\/api\/3\/picklists\/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+    "playbookOrigin": "\/api\/3\/picklists\/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+    "isEditable": true,
+    "uuid": "271ed047-cc56-4e8d-92be-28db2df42f03",
+    "owners": [],
+    "isPrivate": false,
+    "deletedAt": null,
+    "recordTags": []
+}
