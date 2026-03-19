@@ -2,6 +2,7 @@
     {
         "@type": "ExportTemplate",
         "name": "Source Control - Production Content",
+        "lastExportDate": 1773895842.073495,
         "options": {
             "roles": [
                 {
@@ -2806,6 +2807,11 @@
         "type": "Export Wizard",
         "solutionPack": null,
         "metadata": [],
-        "uuid": "49466255-50e3-4345-b1a8-0b2cd29bcc2f"
+        "uuid": "49466255-50e3-4345-b1a8-0b2cd29bcc2f",
+        "id": 65,
+        "createUser": null,
+        "createDate": null,
+        "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+        "modifyDate": 1773895819.03488
     }
 ]

@@ -2,6 +2,7 @@
     {
         "@type": "ExportTemplate",
         "name": "Source Control - Production Settings",
+        "lastExportDate": null,
         "options": {
             "roles": [],
             "rules": [],
@@ -79,6 +80,11 @@
         "type": "Export Wizard",
         "solutionPack": null,
         "metadata": [],
-        "uuid": "2d471ee6-abe4-4ff3-81f9-5f1f6e158eb6"
+        "uuid": "2d471ee6-abe4-4ff3-81f9-5f1f6e158eb6",
+        "id": 66,
+        "createUser": null,
+        "createDate": null,
+        "modifyUser": null,
+        "modifyDate": null
     }
 ]
